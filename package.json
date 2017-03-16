@@ -5,7 +5,7 @@
   "main": "routesPermissions/index.js",
   "sails": {
     "isHook": true,
-    "hookName": "routesPermission"
+    "hookName": "routesPermissions"
   },
   "scripts": {
     "test": "mocha"
