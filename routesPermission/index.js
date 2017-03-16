@@ -18,7 +18,9 @@ module.exports = function (sails) {
     
     // Run when sails loads-- be sure and call `next()`.
     initialize: function (next) {
-      return next();
+      sails.after(["hook:orm:loaded", "hook:errorhandler:loaded"], function() {
+        return next();
+      });
     }
 
   };
