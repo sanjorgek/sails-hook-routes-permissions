@@ -2,17 +2,21 @@
  * routesPermission hook
  */
 
+var lazy = require("lazy.js");
+
 module.exports = function (sails) {
+  function findRoute (route) {
+    return function(routePattern) {
+      var routeMatcher = new RegExp(routePattern.replace(/:[^\s/]+/g, "([\\w-]+)"));
+      var match = route.match(routeMatcher);
+      return (match!==null)? true: false;
+    };
+  }
+
   function permissionRoutes (route, cb) {
-    for (var index in sails.permissions.routesRE) {
-      if (sails.permissions.routesRE.hasOwnProperty(index)) {
-        var routeRE = sails.permissions.routesRE[index];
-        var routeMatcher = new RegExp(routeRE.replace(/:[^\s/]+/g, '([\\w-]+)'));
-        var match = route.match(routeMatcher);
-        if(match!==null) return cb(null, sails.permissions.restrictions[routeRE]);
-      }
-    }
-    return cb(sails.errorhandler.create("unauthorized", "Route not found in permissions"));
+    var posResult = lazy(sails.permissions.routesRE).find(findRoute(route));
+    return (posResult)? cb(null, sails.permissions.restrictions[posResult]):
+      cb(sails.errorhandler.create("unauthorized", "Route not found in permissions"));
   }
   
   return {
