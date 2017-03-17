@@ -1,8 +1,8 @@
-var Sails = require('sails').Sails;
-var request = require('supertest');
-var should = require('should');
+var Sails = require("sails").Sails;
+var request = require("supertest");
+var should = require("should");
 
- describe('Basic tests ::', function() {
+ describe("Basic tests ::", function() {
   // Var to hold a running sails app instance
   var sails;
 
@@ -15,7 +15,7 @@ var should = require('should');
     Sails().lift({
       hooks: {
         // Load the hook
-        "routesPermission": require('../routesPermission'),
+        "routesPermissions": require("../routesPermissions"),
         // Skip grunt (unless your hook uses it)
         "grunt": false
       },
@@ -39,7 +39,7 @@ var should = require('should');
   });
 
   // Test that Sails can lift with the hook in place
-  it ('sails does not crash', function() {
+  it ("sails does not crash", function() {
     return true;
   });
 });
