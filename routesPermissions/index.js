@@ -34,7 +34,7 @@ module.exports = function (sails) {
     
     // Run when sails loads-- be sure and call `next()`.
     initialize: function (next) {
-      sails.after(["hook:orm:loaded", "hook:errorhandler:loaded"], function() {
+      sails.after(["hook:errorhandler:loaded"], function() {
         sails.permissions = {
           routesRE : Object.keys(sails.config.routesPermissions),
           restrictions : sails.config.routesPermissions,
